@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeatFlow</title>
+
+    <meta name="theme-color" content="#121212">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png">
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <canvas id="bg-visualizer"></canvas>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo" id="logo-btn">
+                <i class="fa-solid fa-music"></i>
+                <span class="menu-text">BeatFlow</span>
+                <i class="fa-solid fa-angle-left" id="toggle-sidebar" style="margin-left: auto; font-size: 16px;"></i>
+            </div>
+
+            <nav>
+                <a href="#" class="menu-item active" data-target="home">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="menu-text">Home</span>
+                </a>
+
+                <div class="menu-item" id="library-menu">
+                    <i class="fa-solid fa-book"></i>
+                    <span class="menu-text">Library</span>
+                    <i class="fa-solid fa-chevron-down dropdown-icon" style="font-size: 12px; margin-left: auto;"></i>
+                </div>
+                <div class="submenu" id="library-submenu">
+                    <div class="submenu-item" data-filter="recent">Recently Added</div>
+                    <div class="submenu-item" data-filter="liked"><i class="fa-solid fa-heart"
+                            style="margin-right: 8px; color: #a4e;"></i>Liked Songs</div>
+                    <div class="submenu-item" data-filter="artists">Artists</div>
+                    <div class="submenu-item" data-filter="albums">Albums</div>
+                </div>
+
+                <div class="menu-item" id="playlist-menu">
+                    <i class="fa-solid fa-list-ul"></i>
+                    <span class="menu-text">Playlists</span>
+                    <i class="fa-solid fa-plus dropdown-icon" id="create-playlist-btn"
+                        style="font-size: 12px; margin-left: auto;" title="Create Playlist"></i>
+                </div>
+                <!-- Dynamic Playlists List -->
+                <div class="submenu" id="playlist-submenu" style="display: flex;">
+                    <!-- Playlist Items will act like nav links -->
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content" id="main-content">
+            <!-- Header -->
+            <div class="top-bar">
+                <div class="nav-controls">
+                    <button id="nav-back-btn" title="Go Back"
+                        style="background: rgba(0,0,0,0.3); border: none; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-right: 15px;">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <!-- Forward button could go here -->
+                </div>
+                <div class="search-bar-container" style="position: relative;">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-magnifying-glass search-icon" style="color: #aaa;"></i>
+                        <input type="text" id="search-input" placeholder="What do you want to play?">
+                        <div class="search-actions">
+                            <i class="fa-solid fa-xmark" id="desktop-search-clear"
+                                style="display:none; cursor: pointer; margin-right: 10px;"></i>
+                            <span style="border-left: 1px solid #555; height: 20px; margin: 0 10px;"></span>
+                            <i class="fa-solid fa-box-archive" title="Library" id="desktop-browse-btn"
+                                style="cursor: pointer; color: #aaa;"></i>
+                        </div>
+                    </div>
+                    <div id="search-dropdown" class="search-dropdown" style="display: none;">
+                        <!-- JS Injected Results -->
+                    </div>
+                </div>
+                <div class="top-actions" style="display: flex; align-items: center; gap: 20px;">
+                    <button id="pwa-install-btn" class="nav-btn-primary" style="display:none;">
+                        Install App
+                    </button>
+                    <button class="nav-btn-text">
+                        <span style="display: flex; flex-direction: column; align-items: flex-start; line-height: 1.2;">
+                            <span style="font-size: 12px; color: #ccc;">Music Languages</span>
+                            <span style="font-size: 10px; color: #888;">Hindi</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 10px; margin-left: 8px;"></i>
+                    </button>
+                    <button class="nav-btn-text" style="font-weight: 700;">Log In</button>
+                    <button class="nav-btn-primary">Sign Up</button>
+                </div>
+            </div>
+
+            <!-- Views -->
+
+            <!-- Home View -->
+            <div id="home-view" class="view-section">
+
+
+
+
+                <div class="section-header">
+                    <div class="section-title">Made For You</div>
+                    <button id="show-all-made-for-you" class="section-link-btn">Show All</button>
+                </div>
+
+                <div class="carousel-wrapper" style="position: relative;">
+                    <button class="scroll-btn left" id="featured-prev"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="card-carousel" id="featured-grid">
+                        <!-- JS Injected -->
+                    </div>
+                    <button class="scroll-btn right" id="featured-next"><i
+                            class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <!-- Recently Played Section -->
+                <div id="recently-played-section" style="display: none;">
+                    <div class="section-header">
+                        <div class="section-title">Recently Played</div>
+                        <button id="show-all-recent" class="section-link-btn">Show All</button>
+                    </div>
+                    <div class="carousel-wrapper" style="position: relative;">
+                        <button class="scroll-btn left" id="recent-prev"><i
+                                class="fa-solid fa-chevron-left"></i></button>
+                        <div class="card-carousel" id="recent-played-grid"
+                            style="display: flex; overflow-x: auto; scroll-behavior: smooth; gap: 20px; padding-bottom: 10px; scrollbar-width: none;">
+                            <!-- JS Injected -->
+                        </div>
+                        <button class="scroll-btn right" id="recent-next"><i
+                                class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+
+                <div class="section-title" style="margin-top: 40px;">Popular Playlists</div>
+                <div class="card-grid" id="popular-playlists">
+                    <!-- JS Injected -->
+                </div>
+
+                <div class="section-header">
+                    <div class="section-title">Popular Artists</div>
+                    <button id="show-all-artists" class="section-link-btn">Show All</button>
+                </div>
+                <div class="carousel-wrapper" style="position: relative;">
+                    <button class="scroll-btn left" id="artist-prev"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="carousel-container" id="artist-carousel">
+                        <!-- JS Injected -->
+                    </div>
+                    <button class="scroll-btn right" id="artist-next"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <div class="section-title" id="home-deep-dive-title" style="margin-top: 40px;">Deep Dives</div>
+                <div class="deep-dive-grid" id="big-panels-grid">
+                    <!-- JS Injected -->
+                </div>
+            </div>
+
+
+            <!-- Library/Dashboard View -->
+            <div id="dashboard-view" class="view-section" style="display: none;">
+                <div class="library-header"
+                    style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                    <div class="section-title" id="dashboard-title"
+                        style="margin-bottom: 0; border: none; cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                        <span>Recently Added</span>
+                        <i class="fa-solid fa-chevron-down" style="font-size: 16px;"></i>
+                    </div>
+                    <!-- Sort Dropdown Menu -->
+                    <div class="sort-menu" id="sort-menu" style="display: none;">
+                        <div class="sort-header">Sort by</div>
+                        <div class="sort-option active" data-sort="recent">
+                            <span>Recently Added</span>
+                            <i class="fa-solid fa-arrow-down-short-wide check"></i>
+                        </div>
+                        <div class="sort-option" data-sort="title">
+                            <span>Title</span>
+                            <i class="fa-solid fa-arrow-down-a-z check"></i>
+                        </div>
+                        <div class="sort-option" data-sort="date">
+                            <span>Release Date</span>
+                            <i class="fa-regular fa-calendar check"></i>
+                        </div>
+                        <div class="sort-option" data-sort="creator">
+                            <span>Creator</span>
+                            <i class="fa-solid fa-user check"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-grid" id="library-grid">
+                    <!-- JS Injected items (Artists, Albums etc) -->
+                </div>
+                <div class="card-grid" id="library-grid">
+                    <!-- JS Injected items (Artists, Albums etc) -->
+                </div>
+            </div>
+
+            <!-- Liked Songs View -->
+            <div id="liked-view" class="view-section" style="display: none;">
+                <div class="album-header" style="background: linear-gradient(135deg, #450af5, #a4e);">
+                    <img src="https://t.scdn.co/images/3099b3803ad9496896c43f22fe9be8c4.png" alt="Liked Songs"
+                        class="album-cover-large" style="box-shadow: 0 4px 60px rgba(0,0,0,.5);">
+                    <div class="album-info-hero">
+                        <h5 style="color: white; letter-spacing: 2px;">PLAYLIST</h5>
+                        <h1 style="font-size: 64px; margin: 10px 0; color: white;">Liked Songs</h1>
+                        <p style="color: #e0e0e0; font-size: 14px;">Your personal collection of favorites.</p>
+                        <p style="color: #e0e0e0; margin-top: 5px;" id="liked-songs-count">0 songs</p>
+                    </div>
+                </div>
+                <div class="action-bar" style="padding: 20px 30px; display: flex; align-items: center; gap: 20px;">
+                    <button class="btn-play-large" id="play-liked-btn"
+                        style="width: 56px; height: 56px; border-radius: 50%; background: #1db954; border: none; font-size: 20px; color: black; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s;">
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+                </div>
+                <div class="tracklist-header"
+                    style="padding: 0 30px; border-bottom: 1px solid #333; color: #888; font-size: 12px; text-transform: uppercase; padding-bottom: 10px; display: grid; grid-template-columns: 20px 1fr 1fr 40px 60px; grid-gap: 20px;">
+                    <div>#</div>
+                    <div>Title</div>
+                    <div>Album</div>
+                    <div>Date</div>
+                    <div><i class="fa-regular fa-clock"></i></div>
+                </div>
+                <div class="tracklist-container" id="liked-tracklist-container" style="padding: 20px 30px;">
+                    <!-- Tracks go here -->
+                </div>
+            </div>
+
+            <!-- Album Details View -->
+            <div id="album-view" class="view-section" style="display: none;">
+                <div class="mobile-album-nav mobile-only" style="padding: 10px 0; margin-bottom: 10px;">
+                    <button id="album-back-btn"
+                        style="background:none; border:none; color:white; font-size:16px; display:flex; align-items:center; gap:8px; cursor:pointer;">
+                        <i class="fa-solid fa-chevron-left"></i> Back
+                    </button>
+                </div>
+                <div class="album-header">
+                    <img src="" alt="" class="album-cover-large" id="album-cover">
+                    <div class="album-info-hero">
+                        <h5 style="color: var(--primary-color); letter-spacing: 2px;">ALBUM</h5>
+                        <h1 style="font-size: 48px; margin: 10px 0;" id="album-title">Title</h1>
+                        <p style="color: #ccc;" id="album-artist">Artist</p>
+                        <p style="color: #888; margin-top: 5px;" id="album-meta">2024 • 10 Songs</p>
+                    </div>
+                </div>
+                <div class="album-tracklist" id="tracklist-container">
+                    <!-- List of songs -->
+                </div>
+            </div>
+
+            <!-- Search Results View -->
+            <div id="search-view" class="view-section" style="display: none; padding-bottom: 80px;">
+
+                <!-- Mobile Header -->
+                <div class="mobile-search-header mobile-only"
+                    style="padding: 20px 15px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="user-icon"
+                            style="background:#b026ff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold;">
+                            A</div>
+                        <h2 style="margin:0; font-size: 24px;">Search</h2>
+                    </div>
+                </div>
+
+                <!-- Search Input Container (Mobile Style) -->
+                <div class="search-container-mobile">
+                    <div class="search-bar-mobile">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="search-input-mobile" placeholder="Artists, Songs, Lyrics and more">
+                        <i class="fa-solid fa-xmark" id="mobile-search-clear" style="display: none;"></i>
+                    </div>
+                </div>
+
+                <!-- Recent Searches (Hidden by default, shown on focus/empty search) -->
+                <div id="recent-searches-container" style="display: none; padding: 0 15px;">
+                    <div class="recent-header"
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; margin-top: 20px;">
+                        <h3 class="section-title" style="margin: 0; border: none; font-size: 18px;">Recently Searched
+                        </h3>
+                        <button id="clear-recent-btn"
+                            style="background: none; border: none; color: #b026ff; font-size: 14px; font-weight: 600; cursor: pointer;">Clear</button>
+                    </div>
+                    <div id="recent-list">
+                        <!-- JS Injected -->
+                    </div>
+                </div>
+
+                <!-- Default Browse Data -->
+                <div id="search-browse-content">
+
+                    <!-- Start Browsing Carousel -->
+                    <div style="padding: 0 15px;">
+                        <h3 class="section-title" style="margin-bottom: 15px;">Start browsing</h3>
+                        <div class="browse-carousel" id="browse-carousel"
+                            style="display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;">
+                            <!-- Injected JS -->
+                        </div>
+                    </div>
+
+                    <!-- Mobile Deep Dive Carousel -->
+                    <div style="padding: 0 15px; margin-top: 20px;">
+                        <h3 class="section-title" style="margin-bottom: 15px;">Deep Dives</h3>
+                        <div class="browse-carousel" id="mobile-deep-dive-carousel"
+                            style="display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;">
+                            <!-- Injected JS -->
+                        </div>
+                    </div>
+
+                    <!-- Browse All Grid -->
+                    <div style="padding: 20px 15px;">
+                        <h3 class="section-title" style="margin-bottom: 15px;">Browse all</h3>
+                        <div class="browse-all-grid" id="browse-all-grid"
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <!-- Injected JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Results (Hidden initially) -->
+                <div id="search-results-container" style="display: none; padding: 0 15px;">
+                    <div class="section-title">Results</div>
+                    <div class="card-grid" id="search-results-grid">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browse View (Desktop) -->
+            <div id="browse-view" class="view-section" style="display: none; padding-bottom: 50px;">
+                <div class="section-title">Start browsing</div>
+                <div class="browse-grid-large" id="browse-start-grid">
+                    <!-- JS Injected -->
+                </div>
+
+                <div class="section-title" style="margin-top: 40px;">Browse all</div>
+                <div class="browse-grid-all" id="browse-all-categories">
+                    <!-- JS Injected -->
+                </div>
+            </div>
+
+            <!-- Artist Details View -->
+            <div id="artist-view" class="view-section" style="display: none; padding: 0;">
+                <div class="artist-header-hero" id="artist-hero"
+                    style="position: relative; height: 340px; background-size: cover; background-position: center;">
+                    <div class="artist-header-overlay"
+                        style="position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(transparent 0%, rgba(0,0,0,0.8) 100%);">
+                    </div>
+                    <div class="artist-header-content"
+                        style="position: absolute; bottom: 20px; left: 30px; z-index: 10;">
+                        <div class="verified-badge"
+                            style="display: flex; align-items: center; gap: 8px; font-size: 14px; margin-bottom: 10px;">
+                            <i class="fa-solid fa-circle-check" style="color: #3d91f4;"></i> Verified Artist
+                        </div>
+                        <h1 id="artist-name-large"
+                            style="font-size: 80px; font-weight: 800; margin: 0; line-height: 1; text-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+                            Artist Name</h1>
+                        <p id="artist-listeners-large" style="font-size: 16px; margin-top: 15px; font-weight: 500;">0
+                            monthly listeners</p>
+                    </div>
+                </div>
+
+                <div class="artist-actions" style="padding: 24px 30px; display: flex; align-items: center; gap: 24px;">
+                    <button id="artist-play-btn" class="action-btn-play"
+                        style="width: 56px; height: 56px; border-radius: 50%; background: #1db954; color: black; border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s;"><i
+                            class="fa-solid fa-play"></i></button>
+
+                    <button id="artist-shuffle-btn" title="Shuffle"
+                        style="background: none; border: none; color: #b3b3b3; font-size: 24px; cursor: pointer; transition: color 0.2s;"><i
+                            class="fa-solid fa-shuffle"></i></button>
+
+                    <button id="artist-add-btn" title="Add to Library"
+                        style="background: none; border: 2px solid #b3b3b3; color: #b3b3b3; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;"><i
+                            class="fa-solid fa-plus"></i></button>
+
+                    <button id="artist-download-btn" title="Download"
+                        style="background: none; border: 2px solid #b3b3b3; color: #b3b3b3; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;"><i
+                            class="fa-solid fa-arrow-down"></i></button>
+
+                    <button style="background: none; border: none; color: #b3b3b3; font-size: 24px; cursor: pointer;"><i
+                            class="fa-solid fa-ellipsis"></i></button>
+                </div>
+
+                <div style="padding: 0 30px;">
+                    <div class="section-title">Popular</div>
+                    <div class="album-tracklist" id="artist-tracklist">
+                        <!-- Tracks injected here -->
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Right Side Canvas (Now Playing) -->
+        <aside class="right-sidebar" id="right-sidebar">
+            <div class="rs-header">
+                <span>Now Playing</span>
+                <button id="rs-close-btn" title="Close Sidebar"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="rs-video-card">
+                <video id="rs-loop-video" loop muted playsinline autoplay>
+                    <source src="" type="video/mp4">
+                </video>
+                <div class="rs-video-overlay">
+                    <div class="rs-track-info">
+                        <div class="rs-title" id="rs-title">Select a Song</div>
+                        <div class="rs-artist" id="rs-artist">...</div>
+                    </div>
+                    <button class="rs-add-btn"><i class="fa-solid fa-circle-plus"></i></button>
+                </div>
+            </div>
+
+            <div class="rs-section-card" id="rs-about-card">
+                <div class="rs-card-header">About the artist</div>
+                <div class="rs-about-image-container">
+                    <img src="" id="rs-about-img" alt="Artist">
+                    <div class="rs-about-overlay">
+                        <div class="rs-listeners" id="rs-listeners">... monthly listeners</div>
+                        <div class="rs-bio" id="rs-bio">...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rs-section-card" id="rs-credits-card">
+                <div class="rs-card-header">Credits</div>
+                <div id="rs-credits-list">
+                    <!-- Injected JS -->
+                </div>
+            </div>
+
+            <!-- Spacer for scrolling -->
+            <div style="height: 100px;"></div>
+        </aside>
+        <button id="rs-open-btn" class="side-rail-btn" title="Open Sidebar"><i
+                class="fa-solid fa-layer-group"></i></button>
+    </div>
+
+    <!-- Player Bar -->
+    <div class="player-bar">
+        <!-- Left: Mini Player -->
+        <div class="now-playing-mini">
+            <img src="" id="mini-cover" class="mini-cover" alt="Cover" style="opacity: 0;">
+            <div class="mini-info" style="opacity: 0;">
+                <div id="mini-title" class="mini-title">Title</div>
+                <div id="mini-artist" class="mini-artist">Artist</div>
+            </div>
+            <button id="mini-play-btn" class="mini-btn mobile-only" title="Play"><i
+                    class="fa-solid fa-play"></i></button>
+            <button id="mini-next-btn" class="mini-btn mobile-only" title="Next"><i
+                    class="fa-solid fa-forward-step"></i></button>
+        </div>
+
+        <!-- Center: Controls & Progress -->
+        <div class="player-center">
+            <div class="control-buttons">
+                <button class="btn-control" id="shuffle-btn"><i class="fa-solid fa-shuffle"></i></button>
+                <button class="btn-control" id="prev-btn"><i class="fa-solid fa-backward-step"></i></button>
+                <button class="btn-play" id="play-btn"><i class="fa-solid fa-play"></i></button>
+                <button class="btn-control" id="next-btn"><i class="fa-solid fa-forward-step"></i></button>
+                <button class="btn-control" id="loop-btn"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+            <div class="progress-area">
+                <span id="curr-time">0:00</span>
+                <div class="progress-bar" id="progress-container">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span id="dur-time">0:00</span>
+            </div>
+        </div>
+
+        <!-- Right: Extra Controls -->
+        <div class="player-right">
+            <button class="btn-extra" title="Lyrics"><i class="fa-solid fa-microphone"></i></button>
+            <button class="btn-extra" title="Queue"><i class="fa-solid fa-layer-group"></i></button>
+            <button class="btn-extra" title="Connect to a device"><i class="fa-solid fa-computer"></i></button>
+            <div class="volume-container">
+                <button class="btn-extra" id="mute-btn"><i class="fa-solid fa-volume-high"></i></button>
+                <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.1" value="1">
+            </div>
+            <button class="btn-extra" id="mini-player-btn" title="Mini Player"><i
+                    class="fa-solid fa-window-restore"></i></button>
+            <button class="btn-extra" id="fullscreen-btn" title="Full Screen"><i
+                    class="fa-solid fa-expand"></i></button>
+        </div>
+    </div>
+    <!-- Mobile Full Screen Player Overlay -->
+    <div id="mobile-player-overlay">
+        <div class="mobile-player-header">
+            <button class="mobile-icon-btn" id="close-mobile-player"><i class="fa-solid fa-chevron-down"></i></button>
+            <div class="mobile-header-title">Now Playing</div>
+            <button class="mobile-icon-btn"><i class="fa-solid fa-ellipsis"></i></button>
+        </div>
+
+        <div class="mobile-player-artwork">
+            <img src="" id="mobile-player-img" alt="Album Art">
+        </div>
+
+        <div class="mobile-player-info">
+            <div class="mobile-track-details">
+                <h2 id="mobile-player-title">Title</h2>
+                <p id="mobile-player-artist">Artist</p>
+            </div>
+            <button id="mobile-like-btn" class="mobile-icon-btn"><i class="fa-regular fa-heart"></i></button>
+        </div>
+
+        <div class="mobile-player-progress">
+            <div class="mobile-progress-bar" id="mobile-progress-container">
+                <div class="progress-fill" id="mobile-progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="time-display">
+                <span id="mobile-curr-time">0:00</span>
+                <span id="mobile-dur-time">0:00</span>
+            </div>
+        </div>
+
+        <div class="mobile-player-controls">
+            <button class="mobile-control-btn" id="mobile-shuffle-btn"><i class="fa-solid fa-shuffle"></i></button>
+            <button class="mobile-control-btn" id="mobile-prev-btn"><i class="fa-solid fa-backward-step"></i></button>
+            <button class="mobile-play-circle" id="mobile-play-btn"><i class="fa-solid fa-play"></i></button>
+            <button class="mobile-control-btn" id="mobile-next-btn"><i class="fa-solid fa-forward-step"></i></button>
+            <button class="mobile-control-btn" id="mobile-loop-btn"><i class="fa-solid fa-repeat"></i></button>
+        </div>
+
+        <div class="mobile-player-footer">
+            <button class="mobile-footer-btn"><i class="fa-solid fa-share-nodes"></i></button>
+            <button class="mobile-footer-btn"><i class="fa-solid fa-list-ul"></i></button>
+        </div>
+    </div>
+    <!-- Playlist Creation Dialog -->
+    <div class="dialog-overlay" id="playlist-dialog">
+        <div class="dialog">
+            <h3 style="margin-bottom: 15px;">Create Playlist</h3>
+            <input type="text" id="new-playlist-name" placeholder="Playlist Name"
+                style="width: 100%; padding: 10px; margin-bottom: 15px; background: rgba(255,255,255,0.1); border: 1px solid #333; color: white; border-radius: 5px;">
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button id="cancel-playlist"
+                    style="padding: 8px 15px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">Cancel</button>
+                <button id="save-playlist"
+                    style="padding: 8px 15px; background: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer;">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music Language Modal -->
+    <div id="language-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content language-modal">
+            <div class="modal-header">
+                <h2>What music do you like?</h2>
+                <p>Pick all the languages you want to listen to.</p>
+            </div>
+            <div class="language-grid" id="language-grid">
+                <!-- JS Injected Options -->
+            </div>
+            <button id="update-lang-btn" class="update-btn">Update</button>
+        </div>
+    </div>
+
+    <!-- Full Screen Search Overlay -->
+    <div id="search-overlay" class="search-overlay" style="display: none;">
+        <div class="search-overlay-header">
+            <button id="search-back-btn" class="overlay-back-btn"><i class="fa-solid fa-arrow-left"></i></button>
+            <div class="overlay-input-wrapper">
+                <input type="text" id="overlay-search-input" placeholder="Artists, Songs, Lyrics and more">
+                <i class="fa-solid fa-xmark" id="overlay-search-clear" style="display: none;"></i>
+            </div>
+        </div>
+
+        <div class="search-overlay-content">
+            <!-- Recent Searches -->
+            <div id="overlay-recent-container">
+                <div class="recent-header">
+                    <h3 class="recent-title-text">Recently Searched</h3>
+                    <button id="overlay-clear-btn" class="clear-btn">Clear</button>
+                </div>
+                <div id="overlay-recent-list">
+                    <!-- JS Injected -->
+                </div>
+            </div>
+
+            <!-- Search Results -->
+            <div id="overlay-results-container" style="display: none;">
+                <div class="card-grid" id="overlay-results-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation (Mobile) -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" data-target="home">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" data-target="search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+        </div>
+        <div class="nav-item" data-target="dashboard">
+            <i class="fa-solid fa-book"></i>
+            <span>Library</span>
+        </div>
+        <div class="nav-item">
+            <i class="fa-brands fa-spotify"></i>
+            <span>Premium</span>
+        </div>
+    </nav>
+
+    <!-- Mobile Options Bottom Sheet -->
+    <div id="mobile-options-sheet" class="mobile-options-sheet">
+        <div class="mobile-options-overlay" id="mobile-options-overlay"></div>
+        <div class="mobile-options-content">
+            <div class="mobile-options-header">
+                <img src="" id="mo-cover" class="mo-cover">
+                <div class="mo-info">
+                    <div id="mo-title" class="mo-title">Song Title</div>
+                    <div id="mo-artist" class="mo-artist">Artist Name</div>
+                    <div id="mo-meta" class="mo-meta">Album • 2024</div>
+                </div>
+                <button id="mo-close-btn" class="mo-close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="mobile-options-list">
+                <div class="mo-item" id="mo-add-lib">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add to Library</span>
+                </div>
+                <div class="mo-item" id="mo-add-pl">
+                    <i class="fa-solid fa-list-ul"></i>
+                    <span>Add to a Playlist...</span>
+                </div>
+                <div class="mo-item" id="mo-play-next">
+                    <i class="fa-solid fa-indent"></i>
+                    <span>Play Next</span>
+                </div>
+                <div class="mo-item" id="mo-add-queue">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Add to Queue</span>
+                </div>
+                <div class="mo-item" id="mo-share" style="color: #b3b3b3;">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span>Share Song</span>
+                </div>
+                <div class="mo-item" id="mo-lyrics" style="color: #b3b3b3;">
+                    <i class="fa-solid fa-quote-right"></i>
+                    <span>Share Lyrics...</span>
+                </div>
+                <div class="mo-item" id="mo-view-credits" style="color: #b3b3b3;">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>View Credits</span>
+                </div>
+                <div class="mo-item" id="mo-station" style="color: #b3b3b3;">
+                    <i class="fa-solid fa-tower-broadcast"></i>
+                    <span>Create Station</span>
+                </div>
+                <div class="mo-item" id="mo-fav">
+                    <i class="fa-regular fa-star"></i>
+                    <span>Favourite</span>
+                </div>
+                <div class="mo-item" id="mo-suggest-less" style="color: #b3b3b3;">
+                    <i class="fa-regular fa-thumbs-down"></i>
+                    <span>Suggest Less</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
