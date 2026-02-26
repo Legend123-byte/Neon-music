@@ -3,6 +3,9 @@ let currentPlaylist = [];
 let currentSongIndex = 0;
 let audio = new Audio();
 audio.preload = "auto";
+audio.crossOrigin = "anonymous";
+audio.setAttribute("playsinline", "");
+audio.setAttribute("webkit-playsinline", "");
 let previewAudio = null;
 let currentPreviewInterval = null;
 
@@ -383,6 +386,18 @@ function setupEventListeners() {
     });
     audio.addEventListener('play', () => { if (typeof updateMiniPlayerUI === 'function') updateMiniPlayerUI(); });
     audio.addEventListener('pause', () => { if (typeof updateMiniPlayerUI === 'function') updateMiniPlayerUI(); });
+
+    audio.addEventListener("play", () => {
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.playbackState = "playing";
+        }
+    });
+
+    audio.addEventListener("pause", () => {
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.playbackState = "paused";
+        }
+    });
 
     // Progress Bar Click
     if (player.progressBar) {
@@ -1677,6 +1692,9 @@ function playSong(song) {
     audio.play()
         .then(() => {
             updatePlayButton();
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.playbackState = "playing";
+            }
         })
         .catch(error => {
             console.error("Playback failed:", error);
@@ -1751,9 +1769,11 @@ function updatePlayButton() {
     }
 
     if (rsVideo) {
-        playing
-            ? rsVideo.play().catch(() => { })
-            : rsVideo.pause();
+        if (!document.hidden) {
+            playing
+                ? rsVideo.play().catch(() => { })
+                : rsVideo.pause();
+        }
     }
 }
 // Update Player and Right Side Canvas
@@ -1827,7 +1847,11 @@ function updatePlayerUI(song) {
     // About Section & Right Sidebar
     if (rsVideo && song.video) {
         rsVideo.src = song.video;
-        rsVideo.play().catch(e => console.log('Autoplay prevented'));
+
+        // Only play video if app is visible
+        if (!document.hidden) {
+            rsVideo.play().catch(() => { });
+        }
     }
     if (rsTitle) rsTitle.innerText = song.title;
     if (rsArtist) rsArtist.innerText = song.artist;
