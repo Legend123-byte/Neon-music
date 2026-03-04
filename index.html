@@ -1,3 +1,8 @@
+index.html
+Neon-Music
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,15 +11,12 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>BeatFlow</title>
-
     <meta name="theme-color" content="#121212">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
     <link rel="manifest" href="./manifest.json">
     <link rel="apple-touch-icon" href="./icons/icon-192.png">
-
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -29,13 +31,11 @@
                 <span class="menu-text">BeatFlow</span>
                 <i class="fa-solid fa-angle-left" id="toggle-sidebar" style="margin-left: auto; font-size: 16px;"></i>
             </div>
-
             <nav>
                 <a href="#" class="menu-item active" data-target="home">
                     <i class="fa-solid fa-house"></i>
                     <span class="menu-text">Home</span>
                 </a>
-
                 <div class="menu-item" id="library-menu">
                     <i class="fa-solid fa-book"></i>
                     <span class="menu-text">Library</span>
@@ -48,7 +48,6 @@
                     <div class="submenu-item" data-filter="artists">Artists</div>
                     <div class="submenu-item" data-filter="albums">Albums</div>
                 </div>
-
                 <div class="menu-item" id="playlist-menu">
                     <i class="fa-solid fa-list-ul"></i>
                     <span class="menu-text">Playlists</span>
@@ -61,7 +60,6 @@
                 </div>
             </nav>
         </div>
-
         <!-- Main Content -->
         <main class="main-content" id="main-content">
             <!-- Header -->
@@ -104,20 +102,13 @@
                     <button class="nav-btn-primary">Sign Up</button>
                 </div>
             </div>
-
             <!-- Views -->
-
             <!-- Home View -->
             <div id="home-view" class="view-section">
-
-
-
-
                 <div class="section-header">
                     <div class="section-title">Made For You</div>
                     <button id="show-all-made-for-you" class="section-link-btn">Show All</button>
                 </div>
-
                 <div class="carousel-wrapper" style="position: relative;">
                     <button class="scroll-btn left" id="featured-prev"><i class="fa-solid fa-chevron-left"></i></button>
                     <div class="card-carousel" id="featured-grid">
@@ -126,7 +117,6 @@
                     <button class="scroll-btn right" id="featured-next"><i
                             class="fa-solid fa-chevron-right"></i></button>
                 </div>
-
                 <!-- Recently Played Section -->
                 <div id="recently-played-section" style="display: none;">
                     <div class="section-header">
@@ -144,13 +134,10 @@
                                 class="fa-solid fa-chevron-right"></i></button>
                     </div>
                 </div>
-
-
                 <div class="section-title" style="margin-top: 40px;">Popular Playlists</div>
                 <div class="card-grid" id="popular-playlists">
                     <!-- JS Injected -->
                 </div>
-
                 <div class="section-header">
                     <div class="section-title">Popular Artists</div>
                     <button id="show-all-artists" class="section-link-btn">Show All</button>
@@ -162,14 +149,11 @@
                     </div>
                     <button class="scroll-btn right" id="artist-next"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
-
                 <div class="section-title" id="home-deep-dive-title" style="margin-top: 40px;">Deep Dives</div>
                 <div class="deep-dive-grid" id="big-panels-grid">
                     <!-- JS Injected -->
                 </div>
             </div>
-
-
             <!-- Library/Dashboard View -->
             <div id="dashboard-view" class="view-section" style="display: none;">
                 <div class="library-header"
@@ -207,7 +191,6 @@
                     <!-- JS Injected items (Artists, Albums etc) -->
                 </div>
             </div>
-
             <!-- Liked Songs View -->
             <div id="liked-view" class="view-section" style="display: none;">
                 <div class="album-header" style="background: linear-gradient(135deg, #450af5, #a4e);">
@@ -238,7 +221,6 @@
                     <!-- Tracks go here -->
                 </div>
             </div>
-
             <!-- Album Details View -->
             <div id="album-view" class="view-section" style="display: none;">
                 <div class="mobile-album-nav mobile-only" style="padding: 10px 0; margin-bottom: 10px;">
@@ -260,10 +242,8 @@
                     <!-- List of songs -->
                 </div>
             </div>
-
             <!-- Search Results View -->
             <div id="search-view" class="view-section" style="display: none; padding-bottom: 80px;">
-
                 <!-- Mobile Header -->
                 <div class="mobile-search-header mobile-only"
                     style="padding: 20px 15px; display: flex; justify-content: space-between; align-items: center;">
@@ -274,7 +254,6 @@
                         <h2 style="margin:0; font-size: 24px;">Search</h2>
                     </div>
                 </div>
-
                 <!-- Search Input Container (Mobile Style) -->
                 <div class="search-container-mobile">
                     <div class="search-bar-mobile">
@@ -283,7 +262,6 @@
                         <i class="fa-solid fa-xmark" id="mobile-search-clear" style="display: none;"></i>
                     </div>
                 </div>
-
                 <!-- Recent Searches (Hidden by default, shown on focus/empty search) -->
                 <div id="recent-searches-container" style="display: none; padding: 0 15px;">
                     <div class="recent-header"
@@ -297,10 +275,8 @@
                         <!-- JS Injected -->
                     </div>
                 </div>
-
                 <!-- Default Browse Data -->
                 <div id="search-browse-content">
-
                     <!-- Start Browsing Carousel -->
                     <div style="padding: 0 15px;">
                         <h3 class="section-title" style="margin-bottom: 15px;">Start browsing</h3>
@@ -309,7 +285,6 @@
                             <!-- Injected JS -->
                         </div>
                     </div>
-
                     <!-- Mobile Deep Dive Carousel -->
                     <div style="padding: 0 15px; margin-top: 20px;">
                         <h3 class="section-title" style="margin-bottom: 15px;">Deep Dives</h3>
@@ -318,7 +293,6 @@
                             <!-- Injected JS -->
                         </div>
                     </div>
-
                     <!-- Browse All Grid -->
                     <div style="padding: 20px 15px;">
                         <h3 class="section-title" style="margin-bottom: 15px;">Browse all</h3>
@@ -328,7 +302,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Search Results (Hidden initially) -->
                 <div id="search-results-container" style="display: none; padding: 0 15px;">
                     <div class="section-title">Results</div>
@@ -336,20 +309,17 @@
                     </div>
                 </div>
             </div>
-
             <!-- Browse View (Desktop) -->
             <div id="browse-view" class="view-section" style="display: none; padding-bottom: 50px;">
                 <div class="section-title">Start browsing</div>
                 <div class="browse-grid-large" id="browse-start-grid">
                     <!-- JS Injected -->
                 </div>
-
                 <div class="section-title" style="margin-top: 40px;">Browse all</div>
                 <div class="browse-grid-all" id="browse-all-categories">
                     <!-- JS Injected -->
                 </div>
             </div>
-
             <!-- Artist Details View -->
             <div id="artist-view" class="view-section" style="display: none; padding: 0;">
                 <div class="artist-header-hero" id="artist-hero"
@@ -370,28 +340,22 @@
                             monthly listeners</p>
                     </div>
                 </div>
-
                 <div class="artist-actions" style="padding: 24px 30px; display: flex; align-items: center; gap: 24px;">
                     <button id="artist-play-btn" class="action-btn-play"
                         style="width: 56px; height: 56px; border-radius: 50%; background: #1db954; color: black; border: none; font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s;"><i
                             class="fa-solid fa-play"></i></button>
-
                     <button id="artist-shuffle-btn" title="Shuffle"
                         style="background: none; border: none; color: #b3b3b3; font-size: 24px; cursor: pointer; transition: color 0.2s;"><i
                             class="fa-solid fa-shuffle"></i></button>
-
                     <button id="artist-add-btn" title="Add to Library"
                         style="background: none; border: 2px solid #b3b3b3; color: #b3b3b3; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;"><i
                             class="fa-solid fa-plus"></i></button>
-
                     <button id="artist-download-btn" title="Download"
                         style="background: none; border: 2px solid #b3b3b3; color: #b3b3b3; width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;"><i
                             class="fa-solid fa-arrow-down"></i></button>
-
                     <button style="background: none; border: none; color: #b3b3b3; font-size: 24px; cursor: pointer;"><i
                             class="fa-solid fa-ellipsis"></i></button>
                 </div>
-
                 <div style="padding: 0 30px;">
                     <div class="section-title">Popular</div>
                     <div class="album-tracklist" id="artist-tracklist">
@@ -399,16 +363,70 @@
                     </div>
                 </div>
             </div>
-
+            <!-- Lyrics View -->
+            <div id="lyrics-view" class="view-section" style="display: none;">
+                <!-- Immersive Blurred Background -->
+                <img src="" id="lyrics-bg-img" class="lyrics-bg-blur" alt="">
+                <!-- Immersive Header (Track Info Row) -->
+                <div class="lyrics-track-header">
+                    <img src="" id="lyrics-track-img" alt="Artwork" class="lyrics-mini-artwork">
+                    <div class="lyrics-track-info">
+                        <div class="lyrics-track-title" id="lyrics-track-title">Song Title</div>
+                        <div class="lyrics-track-artist" id="lyrics-track-artist">Artist Name</div>
+                    </div>
+                    <div class="lyrics-header-actions">
+                        <button class="mobile-action-btn desktop-only" id="lyrics-close-desktop"
+                            onclick="toggleLyricsView()"><i class="fa-solid fa-xmark"></i></button>
+                        <button class="mobile-action-btn mobile-only"><i class="fa-regular fa-star"></i></button>
+                        <button class="mobile-action-btn mobile-only" id="lyrics-close-btn"><i
+                                class="fa-solid fa-ellipsis-vertical"></i></button>
+                    </div>
+                </div>
+                <!-- Scrolling Lyrics Body -->
+                <div id="lyrics-container" class="lyrics-body-scroller">
+                    <!-- Lyrics injected here -->
+                </div>
+                <!-- Integrated Bottom Controls -->
+                <div class="lyrics-player-integration">
+                    <!-- Progress (Show on mobile always, desktop optional if immersive) -->
+                    <div class="mobile-player-progress">
+                        <div class="mobile-progress-bar" id="lyrics-progress-container">
+                            <div class="progress-fill" id="lyrics-progress-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="time-labels">
+                            <span id="lyrics-curr-time">0:00</span>
+                            <span id="lyrics-dur-time">-0:00</span>
+                        </div>
+                    </div>
+                    <!-- Playback Controls -->
+                    <div class="mobile-player-controls-row">
+                        <button class="mobile-seek-btn" id="lyrics-prev-btn"><i
+                                class="fa-solid fa-backward-fast"></i></button>
+                        <button class="mobile-play-center-btn" id="lyrics-play-btn"><i
+                                class="fa-solid fa-play"></i></button>
+                        <button class="mobile-seek-btn" id="lyrics-next-btn"><i
+                                class="fa-solid fa-forward-fast"></i></button>
+                    </div>
+                    <!-- Footer Actions -->
+                    <div class="mobile-player-action-footer">
+                        <button class="footer-action-btn active" id="lyrics-footer-toggle-btn"><i
+                                class="fa-solid fa-quote-left"></i></button>
+                        <button class="footer-action-btn" id="lyrics-share-btn-footer"><i
+                                class="fa-solid fa-up-right-from-square"></i></button>
+                        <button class="footer-action-btn" id="lyrics-shuffle-btn-footer"><i
+                                class="fa-solid fa-list-ul"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="lyrics-backdrop" id="lyrics-backdrop"></div>
+            <!-- Lyrics Backdrop (Hidden inside main previously, now moved out below) -->
         </main>
-
         <!-- Right Side Canvas (Now Playing) -->
         <aside class="right-sidebar" id="right-sidebar">
             <div class="rs-header">
                 <span>Now Playing</span>
                 <button id="rs-close-btn" title="Close Sidebar"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
             <div class="rs-video-card">
                 <video id="rs-loop-video" loop muted playsinline autoplay>
                     <source src="" type="video/mp4">
@@ -421,7 +439,6 @@
                     <button class="rs-add-btn"><i class="fa-solid fa-circle-plus"></i></button>
                 </div>
             </div>
-
             <div class="rs-section-card" id="rs-about-card">
                 <div class="rs-card-header">About the artist</div>
                 <div class="rs-about-image-container">
@@ -432,21 +449,18 @@
                     </div>
                 </div>
             </div>
-
             <div class="rs-section-card" id="rs-credits-card">
                 <div class="rs-card-header">Credits</div>
                 <div id="rs-credits-list">
                     <!-- Injected JS -->
                 </div>
             </div>
-
             <!-- Spacer for scrolling -->
             <div style="height: 100px;"></div>
         </aside>
         <button id="rs-open-btn" class="side-rail-btn" title="Open Sidebar"><i
                 class="fa-solid fa-layer-group"></i></button>
     </div>
-
     <!-- Player Bar -->
     <div class="player-bar">
         <!-- Left: Mini Player -->
@@ -461,7 +475,6 @@
             <button id="mini-next-btn" class="mini-btn mobile-only" title="Next"><i
                     class="fa-solid fa-forward-step"></i></button>
         </div>
-
         <!-- Center: Controls & Progress -->
         <div class="player-center">
             <div class="control-buttons">
@@ -479,10 +492,9 @@
                 <span id="dur-time">0:00</span>
             </div>
         </div>
-
         <!-- Right: Extra Controls -->
         <div class="player-right">
-            <button class="btn-extra" title="Lyrics"><i class="fa-solid fa-microphone"></i></button>
+            <button class="btn-extra" id="lyrics-btn" title="Lyrics"><i class="fa-solid fa-microphone"></i></button>
             <button class="btn-extra" title="Queue"><i class="fa-solid fa-layer-group"></i></button>
             <button class="btn-extra" title="Connect to a device"><i class="fa-solid fa-computer"></i></button>
             <div class="volume-container">
@@ -495,47 +507,111 @@
                     class="fa-solid fa-expand"></i></button>
         </div>
     </div>
+    <!-- Immersive Lyrics View (Moved to Top Level for Stacking Context) -->
+    <div id="lyrics-view" class="view-section" style="display: none;">
+        <!-- Immersive Blurred Background -->
+        <img src="" id="lyrics-bg-img" class="lyrics-bg-blur" alt="">
+        <!-- Immersive Header (Track Info Row) -->
+        <div class="lyrics-track-header">
+            <img src="" id="lyrics-track-img" alt="Artwork" class="lyrics-mini-artwork">
+            <div class="lyrics-track-info">
+                <div class="lyrics-track-title" id="lyrics-track-title">Song Title</div>
+                <div class="lyrics-track-artist" id="lyrics-track-artist">Artist Name</div>
+            </div>
+            <div class="lyrics-header-actions">
+                <button class="mobile-action-btn desktop-only" id="lyrics-close-desktop" onclick="toggleLyricsView()"><i
+                        class="fa-solid fa-xmark"></i></button>
+                <button class="mobile-action-btn mobile-only"><i class="fa-regular fa-star"></i></button>
+                <button class="mobile-action-btn mobile-only" id="lyrics-close-btn"><i
+                        class="fa-solid fa-ellipsis-vertical"></i></button>
+            </div>
+        </div>
+        <!-- Scrolling Lyrics Body -->
+        <div id="lyrics-container" class="lyrics-body-scroller">
+            <!-- Lyrics injected here -->
+        </div>
+        <!-- Integrated Bottom Controls -->
+        <div class="lyrics-player-integration">
+            <!-- Progress (Show on mobile always, desktop optional if immersive) -->
+            <div class="mobile-player-progress">
+                <div class="mobile-progress-bar" id="lyrics-progress-container">
+                    <div class="progress-fill" id="lyrics-progress-fill" style="width: 0%"></div>
+                </div>
+                <div class="time-labels">
+                    <span id="lyrics-curr-time">0:00</span>
+                    <span id="lyrics-dur-time">-0:00</span>
+                </div>
+            </div>
+            <!-- Playback Controls -->
+            <div class="mobile-player-controls-row">
+                <button class="mobile-seek-btn" id="lyrics-prev-btn"><i class="fa-solid fa-backward-fast"></i></button>
+                <button class="mobile-play-center-btn" id="lyrics-play-btn"><i class="fa-solid fa-play"></i></button>
+                <button class="mobile-seek-btn" id="lyrics-next-btn"><i class="fa-solid fa-forward-fast"></i></button>
+            </div>
+            <!-- Footer Actions -->
+            <div class="mobile-player-action-footer">
+                <button class="footer-action-btn active" id="lyrics-footer-toggle-btn"><i
+                        class="fa-solid fa-quote-left"></i></button>
+                <button class="footer-action-btn" id="lyrics-share-btn-footer"><i
+                        class="fa-solid fa-up-right-from-square"></i></button>
+                <button class="footer-action-btn" id="lyrics-shuffle-btn-footer"><i
+                        class="fa-solid fa-list-ul"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="lyrics-backdrop" id="lyrics-backdrop"></div>
     <!-- Mobile Full Screen Player Overlay -->
     <div id="mobile-player-overlay">
+        <!-- Sticky Header (Now Playing / Artist name) -->
         <div class="mobile-player-header">
             <button class="mobile-icon-btn" id="close-mobile-player"><i class="fa-solid fa-chevron-down"></i></button>
-            <div class="mobile-header-title">Now Playing</div>
-            <button class="mobile-icon-btn"><i class="fa-solid fa-ellipsis"></i></button>
+            <div class="mobile-header-title" id="mobile-top-artist">Artist Name</div>
+            <button class="mobile-icon-btn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
         </div>
-
-        <div class="mobile-player-artwork">
-            <img src="" id="mobile-player-img" alt="Album Art">
-        </div>
-
-        <div class="mobile-player-info">
-            <div class="mobile-track-details">
-                <h2 id="mobile-player-title">Title</h2>
-                <p id="mobile-player-artist">Artist</p>
+        <!-- Scrollable Body -->
+        <div class="mobile-player-scroll-view">
+            <!-- LARGE ARTWORK SECTION -->
+            <div class="mobile-artwork-container-large">
+                <img src="" id="mobile-player-img-large" alt="Background Artwork" class="artwork-bg-blur">
+                <div class="artwork-main-wrapper">
+                    <img src="" id="mobile-player-img" alt="Main Artwork">
+                </div>
             </div>
-            <button id="mobile-like-btn" class="mobile-icon-btn"><i class="fa-regular fa-heart"></i></button>
-        </div>
-
-        <div class="mobile-player-progress">
-            <div class="mobile-progress-bar" id="mobile-progress-container">
-                <div class="progress-fill" id="mobile-progress-fill" style="width: 0%"></div>
+            <!-- TRACK INFO ACTION ROW -->
+            <div class="mobile-track-info-section">
+                <div class="mobile-info-main">
+                    <h2 id="mobile-player-title">Song Title</h2>
+                    <p id="mobile-player-artist">Artist Name</p>
+                </div>
+                <div class="mobile-info-actions">
+                    <button class="mobile-action-btn" id="mobile-fav-btn" title="Favourite"><i
+                            class="fa-regular fa-star"></i></button>
+                    <button class="mobile-action-btn" id="mobile-options-btn"><i
+                            class="fa-solid fa-circle-ellipsis"></i></button>
+                </div>
             </div>
-            <div class="time-display">
-                <span id="mobile-curr-time">0:00</span>
-                <span id="mobile-dur-time">0:00</span>
+            <!-- PROGRESS SECTION -->
+            <div class="mobile-player-progress">
+                <div class="mobile-progress-bar" id="mobile-progress-container">
+                    <div class="progress-fill" id="mobile-progress-fill" style="width: 0%"></div>
+                </div>
+                <div class="time-labels">
+                    <span id="mobile-curr-time">1:02</span>
+                    <span id="mobile-dur-time">-2:32</span>
+                </div>
+            </div>
+            <!-- CONTROLS ROW -->
+            <div class="mobile-player-controls-row">
+                <button class="mobile-seek-btn" id="mobile-prev-btn"><i class="fa-solid fa-backward-fast"></i></button>
+                <button class="mobile-play-center-btn" id="mobile-play-btn"><i class="fa-solid fa-play"></i></button>
+                <button class="mobile-seek-btn" id="mobile-next-btn"><i class="fa-solid fa-forward-fast"></i></button>
             </div>
         </div>
-
-        <div class="mobile-player-controls">
-            <button class="mobile-control-btn" id="mobile-shuffle-btn"><i class="fa-solid fa-shuffle"></i></button>
-            <button class="mobile-control-btn" id="mobile-prev-btn"><i class="fa-solid fa-backward-step"></i></button>
-            <button class="mobile-play-circle" id="mobile-play-btn"><i class="fa-solid fa-play"></i></button>
-            <button class="mobile-control-btn" id="mobile-next-btn"><i class="fa-solid fa-forward-step"></i></button>
-            <button class="mobile-control-btn" id="mobile-loop-btn"><i class="fa-solid fa-repeat"></i></button>
-        </div>
-
-        <div class="mobile-player-footer">
-            <button class="mobile-footer-btn"><i class="fa-solid fa-share-nodes"></i></button>
-            <button class="mobile-footer-btn"><i class="fa-solid fa-list-ul"></i></button>
+        <div class="mobile-player-action-footer">
+            <button class="footer-action-btn" id="mobile-lyrics-btn"><i class="fa-solid fa-quote-left"></i></button>
+            <button class="footer-action-btn" id="mobile-share-btn-new"><i
+                    class="fa-solid fa-arrow-up-from-bracket"></i></button>
+            <button class="footer-action-btn" id="mobile-shuffle-btn-new"><i class="fa-solid fa-shuffle"></i></button>
         </div>
     </div>
     <!-- Playlist Creation Dialog -->
@@ -552,7 +628,6 @@
             </div>
         </div>
     </div>
-
     <!-- Music Language Modal -->
     <div id="language-modal" class="modal-overlay" style="display: none;">
         <div class="modal-content language-modal">
@@ -566,7 +641,6 @@
             <button id="update-lang-btn" class="update-btn">Update</button>
         </div>
     </div>
-
     <!-- Full Screen Search Overlay -->
     <div id="search-overlay" class="search-overlay" style="display: none;">
         <div class="search-overlay-header">
@@ -576,7 +650,6 @@
                 <i class="fa-solid fa-xmark" id="overlay-search-clear" style="display: none;"></i>
             </div>
         </div>
-
         <div class="search-overlay-content">
             <!-- Recent Searches -->
             <div id="overlay-recent-container">
@@ -588,14 +661,12 @@
                     <!-- JS Injected -->
                 </div>
             </div>
-
             <!-- Search Results -->
             <div id="overlay-results-container" style="display: none;">
                 <div class="card-grid" id="overlay-results-grid"></div>
             </div>
         </div>
     </div>
-
     <!-- Bottom Navigation (Mobile) -->
     <nav class="bottom-nav">
         <div class="nav-item active" data-target="home">
@@ -615,7 +686,6 @@
             <span>Premium</span>
         </div>
     </nav>
-
     <!-- Mobile Options Bottom Sheet -->
     <div id="mobile-options-sheet" class="mobile-options-sheet">
         <div class="mobile-options-overlay" id="mobile-options-overlay"></div>
@@ -673,7 +743,6 @@
             </div>
         </div>
     </div>
-
     <script src="data.js"></script>
     <script src="script.js"></script>
     <script src="bg.js"></script>
