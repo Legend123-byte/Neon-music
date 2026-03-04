@@ -1,78 +1,78 @@
-const CACHE_NAME = 'neon-music-v3';
-
+const CACHE_NAME = 'neon-music-v2';
 const ASSETS_TO_CACHE = [
-    '/',
-    '/index.html',
-    '/style.css',
-    '/script.js',
-    '/data.js',
-    '/manifest.json'
+    './',
+    './index.html',
+    './style.css',
+    './script.js',
+    './data.js',
+    './manifest.json',
+    // You can include specific media files here if desired, 
+    // but it's generally better to rely on runtime caching for large media 
+    // unless you have a small core set, e.g., './On My Way.mp3', './V1.mp4'
 ];
 
-// INSTALL
-self.addEventListener('install', (event) => {
+// Install Event
+self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then((cache) => {
+            .then(cache => {
+                console.log('Opened cache');
                 return cache.addAll(ASSETS_TO_CACHE);
             })
     );
+    self.skipWaiting(); // Force the waiting service worker to become the active service worker
 });
 
-// ACTIVATE
-self.addEventListener('activate', (event) => {
+// Activate Event
+self.addEventListener('activate', event => {
+    const cacheAllowlist = [CACHE_NAME];
     event.waitUntil(
-        caches.keys().then((cacheNames) => {
+        caches.keys().then(cacheNames => {
             return Promise.all(
-                cacheNames.map((cacheName) => {
-                    if (cacheName !== CACHE_NAME) {
+                cacheNames.map(cacheName => {
+                    if (cacheAllowlist.indexOf(cacheName) === -1) {
+                        console.log('Deleting old cache:', cacheName);
                         return caches.delete(cacheName);
                     }
                 })
             );
         })
     );
+    self.clients.claim(); // Claim clients immediately so the page doesn't need to be refreshed
 });
 
-// FETCH
-self.addEventListener('fetch', (event) => {
-
-    if (event.request.method !== 'GET') return;
-
-    // 1️⃣ Navigation requests (HTML pages)
-    if (event.request.mode === 'navigate') {
-        event.respondWith(
-            fetch(event.request)
-                .then((response) => {
-                    return response;
-                })
-                .catch(() => {
-                    return caches.match('/index.html');
-                })
-        );
-        return;
-    }
-
-    // 2️⃣ For other assets → Network First
+// Fetch Event
+self.addEventListener('fetch', event => {
     event.respondWith(
-        fetch(event.request)
-            .then((response) => {
-
-                if (!response || response.status !== 200) {
-                    return caches.match(event.request);
+        caches.match(event.request)
+            .then(response => {
+                if (response) {
+                    return response;
                 }
 
-                const responseClone = response.clone();
+                return fetch(event.request)
+                    .then(networkResponse => {
 
-                caches.open(CACHE_NAME)
-                    .then((cache) => {
-                        cache.put(event.request, responseClone);
+                        if (!networkResponse || networkResponse.status !== 200) {
+                            return networkResponse;
+                        }
+
+                        const responseClone = networkResponse.clone();
+
+                        caches.open(CACHE_NAME)
+                            .then(cache => {
+                                cache.put(event.request, responseClone);
+                            });
+
+                        return networkResponse;
+                    })
+                    .catch(() => {
+                        // Always return a valid Response object
+                        return new Response("Offline", {
+                            status: 503,
+                            statusText: "Offline"
+                        });
                     });
-
-                return response;
-            })
-            .catch(() => {
-                return caches.match(event.request);
             })
     );
 });
