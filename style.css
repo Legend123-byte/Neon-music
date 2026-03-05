@@ -3302,6 +3302,11 @@ body.sidebar-closed .video-panel {
     .track-number {
         display: none;
     }
+
+    .lyrics-header {
+        display: none;
+    }
+
 }
 
 /* Recent Searches Styling */
