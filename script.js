@@ -778,7 +778,12 @@ function showView(viewId) {
 
     // Update UI
     Object.values(views).forEach(el => el.style.display = 'none');
-    views[viewId].style.display = 'block';
+
+    if (viewId === 'lyrics') {
+        views[viewId].style.display = 'flex';
+    } else {
+        views[viewId].style.display = 'block';
+    }
 
     // Update State
     currentView = viewId;
@@ -1760,7 +1765,8 @@ function playSong(song) {
     }
 
     // Fetch Lyrics if view is open
-    if (currentView === 'lyrics') {
+    const overlay = document.getElementById('mobile-player-overlay');
+    if (currentView === 'lyrics' || (overlay && overlay.classList.contains('lyrics-mode'))) {
         fetchLyrics(song);
     }
 
