@@ -452,19 +452,16 @@ const lyricsMapping = [
     // Use `customPlain: "line 1 \n line 2"` for simple text.
     // Use `customLrc: "[00:10.00] line 1 \n [00:15.00] line 2"` for time-synced lyrics.
     // e.g., { id: 1, customPlain: "My own hinglish lyrics here\nLine 2" },
-    { id: 1, lrclibTitle: "Shayad", lrclibArtist: "Pritam" },
-    { id: 2, lrclibTitle: "Apna Bana Le", lrclibArtist: "Sachin-Jigar" },
-    { id: 3, lrclibTitle: "Kesariya", lrclibArtist: "Pritam" },
-    { id: 4, lrclibTitle: "Ishq Mubarak", lrclibArtist: "Ankit Tiwari" },
-    { id: 5, lrclibTitle: "Aabaad Barbaad", lrclibArtist: "Pritam" },
-    { id: 6, lrclibTitle: "Khairiyat", lrclibArtist: "Arijit Singh" },
-    { id: 7, lrclibTitle: "Uska Hi Banana", lrclibArtist: "Arijit Singh" },
-    { id: 8, lrclibTitle: "Sanam Re", lrclibArtist: "Mithoon" },
-    { id: 9, lrclibTitle: "First Class", lrclibArtist: "Arijit Singh" },
-    { id: 10, lrclibTitle: "Hawayein", lrclibArtist: "Arijit Singh" },
-    { id: 11, lrclibTitle: "Sajni", lrclibArtist: "Ram Sampath" },
+    { id: 4, lrclibTitle: "Ishq Mubarak Refix", lrclibArtist: "Arijit Singh" },
     { id: 12, lrclibTitle: "Tera Yaar Hoon Main - Madhushmita", lrclibArtist: "Arijit Singh" },
-    { id: 21, lrclibTitle: "Ae Dil Hai Mushkil", lrclibArtist: "Arijit Singh" },
-    { id: 22, lrclibTitle: "Channa Mereya", lrclibArtist: "Arijit Singh" },
-    { id: 28, lrclibTitle: "Tum Hi Ho", lrclibArtist: "Arijit Singh" }
+    { id: 6, lrclibTitle: "Khairiyat - Chhichhore - Pritam/Arijit Singh", lrclibArtist: "Arijit Singh" },
+    { id: 16, lrclibTitle: 'Sitaare (From "Ikkis") - Arijit Singh', lrclibArtist: "Arijit Singh" },
+    { id: 1, lrclibTitle: "Shayad", lrclibArtist: "Arijit Singh" },
+    { id: 2, lrclibTitle: "Apna Bana Le", lrclibArtist: "Arijit Singh" },
+    { id: 3, lrclibTitle: "Kesariya", lrclibArtist: "Arijit Singh" },
+    { id: 14, lrclibTitle: "Khairiyat (Bonus track)", lrclibArtist: "Arijit Singh" },
+    { id: 18, lrclibTitle: "Roke Na Ruke Naina - Smoothest Aashu", lrclibArtist: "Arijit Singh" },
+    { id: 24, lrclibTitle: "Yeh Jawaani Hai Deewani - Pritam; Rekha Bhardwaj; Tochi Raina", lrclibArtist: "Arijit Singh" },
+    { id: 29, lrclibTitle: "Chahun Main Ya Naa- null - Palak Muchhal, Arijit Singh", lrclibArtist: "Palak Muchhal, Arijit Singh" },
+    { id: 40, lrclibTitle: "Darkhaast- Shivaay - Mithoon, Arijit Singh, Sunidhi Chauhan", lrclibArtist: "Arijit Singh" }
 ];
